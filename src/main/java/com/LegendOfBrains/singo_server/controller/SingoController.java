@@ -23,13 +23,13 @@ public class SingoController {
     }
 
     @GetMapping("/singo/{id}")
-    public ResponseDTO getReport(@RequestParam Long id) {
-        log.info("신고 ID: {}", id);
-        EnrollDTO enrollDTO = singoService.getEnroll(id);
+    public ResponseDTO getReport(@RequestParam("reportId") Long reportId) {
+        log.info("신고 ID: {}", reportId);
+        EnrollDTO enrollDTO = singoService.getEnroll(reportId);
         if (enrollDTO != null) {
             return new ResponseDTO("신고 조회 완료", enrollDTO);
         } else {
-            return new ResponseDTO("해당 신고를 찾을 수 없습니다. ID: " + id, enrollDTO);
+            return new ResponseDTO("해당 신고를 찾을 수 없습니다. ID: ", enrollDTO);
         }
     }
 
@@ -38,6 +38,6 @@ public class SingoController {
         log.info("신고 제목:{}", enrollDTO.getTitle());
         log.info("신고 내용:{}", enrollDTO.getContent());
         EnrollDTO savedEnroll = singoService.createEnroll(enrollDTO);
-        return new ResponseDTO("신고 작성 완료", enrollDTO);
+        return new ResponseDTO("신고 작성 완료", savedEnroll);
     }
 }

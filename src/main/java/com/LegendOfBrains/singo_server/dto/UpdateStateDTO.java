@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class UpdateStateDTO {
-    private Long enrollId;
+    private Long reportId;
     private StateType stateType;
 }

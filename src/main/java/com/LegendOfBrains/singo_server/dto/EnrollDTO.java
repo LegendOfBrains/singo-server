@@ -7,6 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 public class EnrollDTO {
+    private Long reportId;
     private String title;
     private String content;
 }
