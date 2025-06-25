@@ -21,16 +21,16 @@ public class SinGo {
     private Long reportId;
 
     @Column(nullable = false)
-    private String title;
+    private String title; // 신고 제목
 
     @Column(nullable = false)
-    private String content;
+    private String content; // 신고 내용
 
     @Column(nullable = false)
-    private StateType stateType;
+    private StateType stateType; // 처리 현황
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDate date; // 신고일
 
     public void updateState(StateType stateType){
         this.stateType = stateType;
