@@ -29,14 +29,9 @@ public class SingoController {
 
     @GetMapping("/{reportId}")
     @Operation(summary = "신고 상세 조회")
-    public ResponseDTO getReport(@RequestParam("reportId") Long reportId) {
+    public EnrollResponseDTO getReport(@RequestParam("reportId") Long reportId) {
         log.info("신고 ID: {}", reportId);
-        EnrollResponseDTO responseDTO = singoService.getEnroll(reportId);
-        if (responseDTO != null) {
-            return new ResponseDTO("신고 조회 완료");
-        } else {
-            return new ResponseDTO("해당 신고를 찾을 수 없습니다. ID: " + reportId);
-        }
+        return singoService.getEnroll(reportId);
     }
 
     @PostMapping
