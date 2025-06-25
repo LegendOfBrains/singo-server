@@ -40,7 +40,7 @@ public class SingoController {
         log.info("신고 제목:{}", enrollDTO.getTitle());
         log.info("신고 내용:{}", enrollDTO.getContent());
         boolean created = singoService.createEnroll(enrollDTO);
-        return new ResponseDTO(created ? "created" : "fail");
+        return new ResponseDTO(created ? "신고가 접수되었습니다." : "신고 접수에 실패하였습니다.");
     }
 
     @PutMapping("/state/{reportId}")
@@ -51,7 +51,7 @@ public class SingoController {
     ) {
         log.info("수정 대상 신고 ID:{}", reportId);
         boolean updated = singoService.updateState(reportId, stateType);
-        return new ResponseDTO(updated ? "updated" : "not found");
+        return new ResponseDTO(updated ? "신고 처리 현황을 변경하였습니다." : "신고 처리 현황을 변경에 실패하였습니다.");
     }
 
     @DeleteMapping("/delete/{reportId}")
@@ -59,6 +59,6 @@ public class SingoController {
     public ResponseDTO delete(@RequestParam("reportId") Long reportId) {
         log.info("삭제 대상 신고 ID:{}", reportId);
         boolean deleted = singoService.delete(reportId);
-        return new ResponseDTO(deleted ? "deleted" : "not found");
+        return new ResponseDTO(deleted ? "신고가 삭제되었습니다." : "해당 신고를 찾을 수 없습니다.");
     }
 }
