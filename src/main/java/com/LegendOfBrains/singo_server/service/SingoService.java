@@ -1,6 +1,7 @@
 package com.LegendOfBrains.singo_server.service;
 
 import com.LegendOfBrains.singo_server.dto.EnrollDTO;
+import com.LegendOfBrains.singo_server.dto.EnrollResponseDTO;
 import com.LegendOfBrains.singo_server.entity.SinGo;
 import com.LegendOfBrains.singo_server.enums.StateType;
 import com.LegendOfBrains.singo_server.repo.SinGoRepository;
@@ -19,7 +20,7 @@ public class SingoService {
     @Autowired
     SinGoRepository sinGoRepository;
 
-    public EnrollDTO getEnroll(Long id) {
+    public EnrollResponseDTO getEnroll(Long id) {
         Optional<SinGo> optional = sinGoRepository.findById(id);
         if(optional.isPresent()) {
             SinGo sinGo = optional.get();
@@ -28,13 +29,13 @@ public class SingoService {
         return null;
     }
 
-    public List<EnrollDTO> getAllEnroll() {
+    public List<EnrollResponseDTO> getAllEnroll() {
         return sinGoRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    public EnrollDTO createEnroll(EnrollDTO enrollDTO) {
+    public boolean createEnroll(EnrollDTO enrollDTO) {
         SinGo sinGo = new SinGo();
         sinGo.setReportId(enrollDTO.getReportId());
         sinGo.setTitle(enrollDTO.getTitle());
@@ -45,7 +46,7 @@ public class SingoService {
         SinGo savedSinGo = sinGoRepository.save(sinGo);
         log.info("신고가 생성되었습니다. ID: {}, 제목: {}", savedSinGo.getReportId(), savedSinGo.getTitle());
 
-        return convertToDTO(savedSinGo);
+        return savedSinGo != null && savedSinGo.getReportId() != null;
     }
 
     public Boolean updateState(Long id, StateType stateType) {
@@ -67,11 +68,13 @@ public class SingoService {
         return false;
     }
 
-    private EnrollDTO convertToDTO(SinGo sinGo) {
-        EnrollDTO enrollDTO = new EnrollDTO();
-        enrollDTO.setReportId(sinGo.getReportId());
-        enrollDTO.setTitle(sinGo.getTitle());
-        enrollDTO.setContent(sinGo.getContent());
-        return enrollDTO;
+    private EnrollResponseDTO convertToDTO(SinGo sinGo) {
+        EnrollResponseDTO responseDTO = new EnrollResponseDTO();
+        responseDTO.setReportId(sinGo.getReportId());
+        responseDTO.setTitle(sinGo.getTitle());
+        responseDTO.setContent(sinGo.getContent());
+        responseDTO.setStateType(sinGo.getStateType());
+        responseDTO.setDate(sinGo.getDate());
+        return responseDTO;
     }
 }

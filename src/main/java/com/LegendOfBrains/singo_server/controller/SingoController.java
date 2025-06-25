@@ -1,6 +1,7 @@
 package com.LegendOfBrains.singo_server.controller;
 
 import com.LegendOfBrains.singo_server.dto.EnrollDTO;
+import com.LegendOfBrains.singo_server.dto.EnrollResponseDTO;
 import com.LegendOfBrains.singo_server.dto.ResponseDTO;
 import com.LegendOfBrains.singo_server.enums.StateType;
 import com.LegendOfBrains.singo_server.service.SingoService;
@@ -20,8 +21,8 @@ public class SingoController {
 
     @GetMapping
     @Operation(summary = "신고 리스트 조회")
-    public List<EnrollDTO> getAllReport() {
-        List<EnrollDTO> enrollList = singoService.getAllEnroll();
+    public List<EnrollResponseDTO> getAllReport() {
+        List<EnrollResponseDTO> enrollList = singoService.getAllEnroll();
         log.info("신고 리스트 조회 완료, 총 {}건", enrollList.size());
         return enrollList;
     }
@@ -30,8 +31,8 @@ public class SingoController {
     @Operation(summary = "신고 상세 조회")
     public ResponseDTO getReport(@RequestParam("reportId") Long reportId) {
         log.info("신고 ID: {}", reportId);
-        EnrollDTO enrollDTO = singoService.getEnroll(reportId);
-        if (enrollDTO != null) {
+        EnrollResponseDTO responseDTO = singoService.getEnroll(reportId);
+        if (responseDTO != null) {
             return new ResponseDTO("신고 조회 완료");
         } else {
             return new ResponseDTO("해당 신고를 찾을 수 없습니다. ID: " + reportId);
@@ -43,8 +44,8 @@ public class SingoController {
     public ResponseDTO postCreate(@RequestBody EnrollDTO enrollDTO) {
         log.info("신고 제목:{}", enrollDTO.getTitle());
         log.info("신고 내용:{}", enrollDTO.getContent());
-        EnrollDTO savedEnroll = singoService.createEnroll(enrollDTO);
-        return new ResponseDTO("신고 작성 완료");
+        boolean created = singoService.createEnroll(enrollDTO);
+        return new ResponseDTO(created ? "created" : "fail");
     }
 
     @PutMapping("/state/{reportId}")
