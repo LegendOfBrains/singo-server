@@ -8,6 +8,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ResponseDTO {
-    private Object data;
+    private Long id;
     private String message;
+    private Object data;
+
+    public ResponseDTO(String message, EnrollDTO enrollDTO) {
+        this.message = message;
+        this.data = null;
+    }
 }
