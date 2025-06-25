@@ -36,6 +36,10 @@ public class SingoService {
     }
 
     public boolean createEnroll(EnrollDTO enrollDTO) {
+        Optional<SinGo> optional = sinGoRepository.findById(enrollDTO.getReportId());
+        if (optional.isPresent()) {
+            return false;
+        }
         SinGo sinGo = new SinGo();
         sinGo.setReportId(enrollDTO.getReportId());
         sinGo.setTitle(enrollDTO.getTitle());
@@ -45,8 +49,7 @@ public class SingoService {
 
         SinGo savedSinGo = sinGoRepository.save(sinGo);
         log.info("신고가 생성되었습니다. ID: {}, 제목: {}", savedSinGo.getReportId(), savedSinGo.getTitle());
-
-        return savedSinGo != null && savedSinGo.getReportId() != null;
+        return true;
     }
 
     public Boolean updateState(Long id, StateType stateType) {
