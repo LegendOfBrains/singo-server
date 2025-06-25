@@ -48,6 +48,25 @@ public class SingoService {
         return convertToDTO(savedSinGo);
     }
 
+    public Boolean updateState(Long id, StateType stateType) {
+        Optional<SinGo> optional = sinGoRepository.findById(id);
+        if(optional.isPresent()) {
+            SinGo sinGo = optional.get();
+            sinGo.updateState(stateType);
+            sinGoRepository.save(sinGo);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean delete(Long id) {
+        if(sinGoRepository.existsById(id)) {
+            sinGoRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
     private EnrollDTO convertToDTO(SinGo sinGo) {
         EnrollDTO enrollDTO = new EnrollDTO();
         enrollDTO.setReportId(sinGo.getReportId());

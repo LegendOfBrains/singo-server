@@ -9,10 +9,4 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ResponseDTO {
     private String message;
-    private Object data;
-
-    public ResponseDTO(String message, EnrollDTO enrollDTO) {
-        this.message = message;
-        this.data = null;
-    }
 }
