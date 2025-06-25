@@ -1,5 +1,6 @@
 package com.LegendOfBrains.singo_server.entity;
 
+import com.LegendOfBrains.singo_server.enums.StateType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +25,9 @@ public class SinGo {
 
     @Column(nullable = false)
     private String content;
+
+    @Column(nullable = false)
+    private StateType stateType;
 
     @Column(nullable = false)
     private LocalDate date;
