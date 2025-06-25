@@ -31,4 +31,8 @@ public class SinGo {
 
     @Column(nullable = false)
     private LocalDate date;
+
+    public void updateState(StateType stateType){
+        this.stateType = stateType;
+    }
 }
