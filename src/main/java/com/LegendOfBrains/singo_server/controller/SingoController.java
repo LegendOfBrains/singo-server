@@ -51,7 +51,7 @@ public class SingoController {
     ) {
         log.info("수정 대상 신고 ID:{}", reportId);
         boolean updated = singoService.updateState(reportId, stateType);
-        return new ResponseDTO(updated ? "신고 처리 현황을 변경하였습니다." : "신고 처리 현황을 변경에 실패하였습니다.");
+        return new ResponseDTO(updated ? "신고 처리 현황을 변경하였습니다." : "신고 처리 현황 변경에 실패하였습니다.");
     }
 
     @DeleteMapping("/delete/{reportId}")
